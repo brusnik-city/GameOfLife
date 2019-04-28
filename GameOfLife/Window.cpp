@@ -1,4 +1,6 @@
+﻿#include <iostream>
 #include "Window.h"
+
 
 Window::Window()
 {
@@ -39,7 +41,7 @@ Window::Window()
 	//buttons
 	button[0].setFont(font);
 	button[0].setCharacterSize(16);
-	button[0].setFillColor(sf::Color::White);
+	button[0].setFillColor(sf::Color(180,180,180));
 	button[0].setPosition(10, height - 35);
 	button[0].setString("Play");
 
@@ -47,17 +49,17 @@ Window::Window()
 	button[1].setCharacterSize(16);
 	button[1].setFillColor(sf::Color::White);
 	button[1].setPosition(60, height - 35);
-	button[1].setString("II Pause");
+	button[1].setString("|| Pause");
 
 	button[2].setFont(font);
 	button[2].setCharacterSize(16);
-	button[2].setFillColor(sf::Color::White);
+	button[2].setFillColor(sf::Color(180,180,180));
 	button[2].setPosition(140, height - 35);
 	button[2].setString("<< Backward");
 
 	button[3].setFont(font);
 	button[3].setCharacterSize(16);
-	button[3].setFillColor(sf::Color::White);
+	button[3].setFillColor(sf::Color(180,180,180));
 	button[3].setPosition(250, height - 35);
 	button[3].setString(">> Forward");
 	
@@ -74,8 +76,10 @@ void Window::Update()
 	while (window->isOpen())
 	{
 		//play game
-		game->PlayGame();
+		if(playGame)
+			game->PlayGame();
 
+		//events
 		sf::Event event;
 		while (window->pollEvent(event))
 		{
@@ -89,6 +93,24 @@ void Window::Update()
 				if (event.key.code == sf::Keyboard::Escape)
 					window->close();
 				break;
+			case sf::Event::MouseButtonReleased:
+				sf::Vector2i position = sf::Mouse::getPosition(*window);
+				
+				if (position.x < 55 && position.y > height - 40)
+				{
+					button[1].setFillColor(sf::Color(180,180,180));
+					button[0].setFillColor(sf::Color::White);
+					playGame = true;
+				}
+				else if (position.x <130 && position.y > height - 40)
+				{
+					button[0].setFillColor(sf::Color(180,180,180));
+					button[1].setFillColor(sf::Color::White);
+					playGame = false;
+				}
+
+				std::cout << position.x << " " << position.y << std::endl;
+				std::cout << "mouse released"<<std::endl;
 			}
 		}
 		//render window

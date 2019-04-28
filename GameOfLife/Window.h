@@ -21,6 +21,7 @@ private:
 	sf::Text button[4];
 	int width;
 	int height;
+	bool playGame = false;
 
 
 };

@@ -14,7 +14,7 @@ Game::~Game() {}
 
 void Game::PlayGame()
 {
-	Sleep(1000);
+	Sleep(200);
 	int counter = 0;
 	Board newBoard = m_board;
 	for (int i = 0; i < m_board.SizeX(); i++)
