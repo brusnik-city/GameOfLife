@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 
+class Memento;
+
 class Board
 {
 public:
@@ -13,6 +15,8 @@ public:
 	size_t SizeY() const;
 	int& Value(int x, int y);
 	void SetValue(int x, int y, int value);
+	Memento *createMemento();
+	void restoreToMemento(Memento *memento);
 private:
 	std::vector<std::vector<int>> m_board;
 };

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 
+#include "Memento.h"
 #include "Board.h"
 
 Board::Board(){}
@@ -61,4 +62,15 @@ void Board::SetValue(int x, int y, int value)
 std::vector<std::vector<int>> Board::GetBoard() const
 {
 	return m_board;
+}
+
+Memento *Board::createMemento() 
+{
+	return new Memento(*this);
+}
+
+void Board::restoreToMemento(Memento *memento) {
+
+	*this = memento->getBoard();
+
 }

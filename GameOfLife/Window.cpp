@@ -98,19 +98,28 @@ void Window::Update()
 				
 				if (position.x < 55 && position.y > height - 40)
 				{
-					button[1].setFillColor(sf::Color(180,180,180));
 					button[0].setFillColor(sf::Color::White);
+					button[1].setFillColor(sf::Color(180,180,180));
+					button[2].setFillColor(sf::Color(180,180,180));
+					button[3].setFillColor(sf::Color(180,180,180));
 					playGame = true;
 				}
 				else if (position.x <130 && position.y > height - 40)
 				{
 					button[0].setFillColor(sf::Color(180,180,180));
 					button[1].setFillColor(sf::Color::White);
+					button[2].setFillColor(sf::Color::White);
+					button[3].setFillColor(sf::Color::White);
 					playGame = false;
 				}
-
-				std::cout << position.x << " " << position.y << std::endl;
-				std::cout << "mouse released"<<std::endl;
+				else if (position.x <240 && position.y >height - 40 && !playGame)
+				{
+					game->BackwardRestoreBoardToMemento();
+				}
+				else if (position.x <340 && position.y >height - 40 && !playGame)
+				{
+					game->ForwardRestoreBoardToMemento();
+				}
 			}
 		}
 		//render window

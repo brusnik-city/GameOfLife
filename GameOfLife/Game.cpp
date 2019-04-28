@@ -138,6 +138,7 @@ void Game::PlayGame()
 			counter = 0;
 		}
 	}
+	m_caretaker.setMemento(m_board.createMemento());
 	m_board = newBoard;
 }
 
@@ -155,4 +156,14 @@ size_t Game::GetSizeY() const
 bool Game::GetCell(int i, int j)
 {
 	return  m_board.Value(i, j);
+}
+
+void Game::BackwardRestoreBoardToMemento()
+{
+	m_board.restoreToMemento(m_caretaker.getMementoBackward());
+}
+
+void Game::ForwardRestoreBoardToMemento()
+{
+	m_board.restoreToMemento(m_caretaker.getMementoForward());
 }
