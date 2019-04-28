@@ -13,10 +13,14 @@ private:
 
 	Game *game;
 	sf::RenderWindow *window;
-	sf::RectangleShape rectangle;
 	sf::Text title;
+	sf::RectangleShape titleRectangle;
+	sf::RectangleShape naviRectangle;
 	sf::RectangleShape deathCell;
 	sf::RectangleShape aliveCell;
+	sf::Text button[4];
+	int width;
+	int height;
 
 
 };

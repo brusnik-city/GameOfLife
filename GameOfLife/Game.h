@@ -1,15 +1,16 @@
 #pragma once
 #include <vector>
-#include "Board.h""
+
+#include "Board.h"
 class Game
 {
 public:
 	Game();
 	~Game();
-	void Run();
-	void ReadFile();
 	void PlayGame();
-	void PrintBoard() const;
+	size_t GetSizeX() const;
+	size_t GetSizeY() const;
+	bool GetCell(int i, int j);
 private:
 	Board m_board;
 };

@@ -4,8 +4,5 @@
 int main()
 {
 	Window window;
-	//Game game;
-	//game.Run();
-	//std::getchar();
 	return 0;
 }

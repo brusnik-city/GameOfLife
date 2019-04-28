@@ -12,69 +12,123 @@ Game::Game()
 
 Game::~Game() {}
 
-void Game::Run()
-{
-	
-	PrintBoard();
-
-	while (true)
-	{
-		PlayGame();
-		PrintBoard();
-		Sleep(1000);
-	}
-}
-
-void Game::ReadFile()
-{
-	/*char field;
-	std::ifstream gameFile;
-	gameFile.open("Game.txt", std::ios::in);
-	if (gameFile.is_open())
-	{
-		std::vector<int> line;
-		line.push_back(0);
-		while (gameFile.get(field))
-		{
-			line.push_back(static_cast<int>(field - 48));
-			if (field == '\n')
-			{
-				line.pop_back();
-				line.push_back(0);
-				m_board.push_back(line);
-				line.clear();
-				line.push_back(0);
-			}
-		}
-		line.push_back(0);
-		m_board.push_back(line);
-		line.clear();
-
-		for (auto i = m_board.begin()->begin(); i != m_board.begin()->end(); i++)
-			line.push_back(0);
-		m_board.insert(m_board.begin(), line);
-		m_board.push_back(line);
-	}
-	else
-		std::cout << "nie otworzono";*/
-}
-
 void Game::PlayGame()
 {
+	Sleep(1000);
 	int counter = 0;
 	Board newBoard = m_board;
-	for (int i = 1; i < m_board.Size() - 1; i++)
+	for (int i = 0; i < m_board.SizeX(); i++)
 	{
-		for (int j = 1; j < m_board.SizeY() - 1; j++)
+		for (int j = 0; j < m_board.SizeY() ; j++)
 		{
-			if (m_board.Value(i-1,j-1) == 1) counter++;
-			if (m_board.Value(i-1,j) == 1) counter++;
-			if (m_board.Value(i-1,j+1) == 1) counter++;
-			if (m_board.Value(i,j-1) == 1) counter++;
-			if (m_board.Value(i,j+1) == 1) counter++;
-			if (m_board.Value(i+1,j-1) == 1) counter++;
-			if (m_board.Value(i+1,j) == 1) counter++;
-			if (m_board.Value(i+1,j+1) == 1) counter++;
+			if (i == 0 )
+			{
+				if (j == 0)
+				{
+					if (m_board.Value(m_board.SizeX()-1, m_board.SizeY()-1) == 1) counter++;
+					if (m_board.Value(m_board.SizeX()-1, j) == 1) counter++;
+					if (m_board.Value(m_board.SizeX()-1, j + 1) == 1) counter++;
+					if (m_board.Value(i, m_board.SizeY()-1) == 1) counter++;
+					if (m_board.Value(i, j + 1) == 1) counter++;
+					if (m_board.Value(i + 1, m_board.SizeY()-1) == 1) counter++;
+					if (m_board.Value(i + 1, j) == 1) counter++;
+					if (m_board.Value(i + 1, j + 1) == 1) counter++;
+
+				}
+				else if (j + 1 == m_board.SizeY())
+				{
+					if (m_board.Value(m_board.SizeX()-1, j - 1) == 1) counter++;
+					if (m_board.Value(m_board.SizeX()-1, j) == 1) counter++;
+					if (m_board.Value(m_board.SizeX()-1, 0) == 1) counter++;
+					if (m_board.Value(i, j - 1) == 1) counter++;
+					if (m_board.Value(i, 0) == 1) counter++;
+					if (m_board.Value(i + 1, j - 1) == 1) counter++;
+					if (m_board.Value(i + 1, j) == 1) counter++;
+					if (m_board.Value(i + 1, 0) == 1) counter++;
+				}
+				else
+				{
+					if (m_board.Value(m_board.SizeX()-1, j - 1) == 1) counter++;
+					if (m_board.Value(m_board.SizeX()-1, j) == 1) counter++;
+					if (m_board.Value(m_board.SizeX()-1, j + 1) == 1) counter++;
+					if (m_board.Value(i, j - 1) == 1) counter++;
+					if (m_board.Value(i, j + 1) == 1) counter++;
+					if (m_board.Value(i + 1, j - 1) == 1) counter++;
+					if (m_board.Value(i + 1, j) == 1) counter++;
+					if (m_board.Value(i + 1, j + 1) == 1) counter++;
+				}
+
+			}
+			else if (i + 1 == m_board.SizeX())
+			{
+				if (j == 0)
+				{
+					if (m_board.Value(i - 1, m_board.SizeY()-1) == 1) counter++;
+					if (m_board.Value(i - 1, j) == 1) counter++;
+					if (m_board.Value(i - 1, j + 1) == 1) counter++;
+					if (m_board.Value(i, m_board.SizeY()-1) == 1) counter++;
+					if (m_board.Value(i, j + 1) == 1) counter++;
+					if (m_board.Value(0, m_board.SizeY()-1) == 1) counter++;
+					if (m_board.Value(0, j) == 1) counter++;
+					if (m_board.Value(0, j + 1) == 1) counter++;
+				}
+				else if (j + 1 == m_board.SizeY())
+				{
+					if (m_board.Value(i - 1, j - 1) == 1) counter++;
+					if (m_board.Value(i - 1, j) == 1) counter++;
+					if (m_board.Value(i - 1, 0) == 1) counter++;
+					if (m_board.Value(i, j - 1) == 1) counter++;
+					if (m_board.Value(i, 0) == 1) counter++;
+					if (m_board.Value(0, j - 1) == 1) counter++;
+					if (m_board.Value(0, j) == 1) counter++;
+					if (m_board.Value(0, 0) == 1) counter++;
+				}
+				else
+				{
+					if (m_board.Value(i - 1, j - 1) == 1) counter++;
+					if (m_board.Value(i - 1, j) == 1) counter++;
+					if (m_board.Value(i - 1, j + 1) == 1) counter++;
+					if (m_board.Value(i, j - 1) == 1) counter++;
+					if (m_board.Value(i, j + 1) == 1) counter++;
+					if (m_board.Value(0, j - 1) == 1) counter++;
+					if (m_board.Value(0, j) == 1) counter++;
+					if (m_board.Value(0, j + 1) == 1) counter++;
+				}
+				
+			}
+			else if (j == 0)
+			{
+				if (m_board.Value(i - 1, m_board.SizeY()-1) == 1) counter++;
+				if (m_board.Value(i - 1, j) == 1) counter++;
+				if (m_board.Value(i - 1, j + 1) == 1) counter++;
+				if (m_board.Value(i, m_board.SizeY()-1) == 1) counter++;
+				if (m_board.Value(i, j + 1) == 1) counter++;
+				if (m_board.Value(i + 1, m_board.SizeY()-1) == 1) counter++;
+				if (m_board.Value(i + 1, j) == 1) counter++;
+				if (m_board.Value(i + 1, j + 1) == 1) counter++;
+			}
+			else if (j + 1 == m_board.SizeY())
+			{
+				if (m_board.Value(i - 1, j - 1) == 1) counter++;
+				if (m_board.Value(i - 1, j) == 1) counter++;
+				if (m_board.Value(i - 1, 0) == 1) counter++;
+				if (m_board.Value(i, j - 1) == 1) counter++;
+				if (m_board.Value(i, 0) == 1) counter++;
+				if (m_board.Value(i + 1, j - 1) == 1) counter++;
+				if (m_board.Value(i + 1, j) == 1) counter++;
+				if (m_board.Value(i + 1, 0) == 1) counter++;
+			}
+			else
+			{
+				if (m_board.Value(i - 1, j - 1) == 1) counter++;
+				if (m_board.Value(i - 1, j) == 1) counter++;
+				if (m_board.Value(i - 1, j + 1) == 1) counter++;
+				if (m_board.Value(i, j - 1) == 1) counter++;
+				if (m_board.Value(i, j + 1) == 1) counter++;
+				if (m_board.Value(i + 1, j - 1) == 1) counter++;
+				if (m_board.Value(i + 1, j) == 1) counter++;
+				if (m_board.Value(i + 1, j + 1) == 1) counter++;
+			}
 			if (m_board.Value(i, j) == 0 && counter == 3)
 				newBoard.SetValue(i, j, 1);
 			else if (m_board.Value(i, j) == 1 && (counter == 2 || counter == 3))
@@ -87,14 +141,18 @@ void Game::PlayGame()
 	m_board = newBoard;
 }
 
-void Game::PrintBoard() const
+
+size_t Game::GetSizeX() const
 {
-/*	for (auto line = ++m_board.Begin(); line != --m_board.Size(); ++line)
-	{
-		for (auto field = ++(*line).begin(); field != --(*line).end(); ++field)
-			std::cout << *field;
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	*/
-	}
+	return m_board.SizeX();
+}
+
+size_t Game::GetSizeY() const
+{
+	return m_board.SizeY();
+}
+
+bool Game::GetCell(int i, int j)
+{
+	return  m_board.Value(i, j);
+}
