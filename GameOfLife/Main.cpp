@@ -1,4 +1,3 @@
-#include "Game.h"
 #include "Window.h"
 
 int main()

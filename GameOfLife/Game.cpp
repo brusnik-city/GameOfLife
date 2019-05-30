@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <Windows.h>
 
 #include "Game.h"
 
@@ -14,7 +13,6 @@ Game::~Game() {}
 
 void Game::PlayGame()
 {
-	Sleep(200);
 	int counter = 0;
 	Board newBoard = m_board;
 	for (int i = 0; i < m_board.SizeX(); i++)

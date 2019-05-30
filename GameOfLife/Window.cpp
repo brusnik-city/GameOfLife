@@ -3,7 +3,7 @@
 
 
 Window::Window()
-{
+{	
 	//create new game
 	game = new Game();
 
@@ -18,6 +18,7 @@ Window::Window()
 	naviRectangle.setSize((sf::Vector2f(width, 50.f)));
 	naviRectangle.setPosition(0.f, height - 50.f);
 	naviRectangle.setFillColor(sf::Color(37, 77, 170));
+
 	//font properties
 	sf::Font font;
 	if (!font.loadFromFile("Roboto-Medium.ttf"))
@@ -41,13 +42,13 @@ Window::Window()
 	//buttons
 	button[0].setFont(font);
 	button[0].setCharacterSize(16);
-	button[0].setFillColor(sf::Color(180,180,180));
+	button[0].setFillColor(sf::Color::White);
 	button[0].setPosition(10, height - 35);
 	button[0].setString("Play");
 
 	button[1].setFont(font);
 	button[1].setCharacterSize(16);
-	button[1].setFillColor(sf::Color::White);
+	button[1].setFillColor(sf::Color(180,180,180));
 	button[1].setPosition(60, height - 35);
 	button[1].setString("|| Pause");
 
@@ -62,7 +63,23 @@ Window::Window()
 	button[3].setFillColor(sf::Color(180,180,180));
 	button[3].setPosition(250, height - 35);
 	button[3].setString(">> Forward");
+
+	//fps text
+	fps.setFont(font);
+	fps.setCharacterSize(16);
+	fps.setFillColor(sf::Color::White);
+	fps.setPosition(width - 60, height - 35);
 	
+	//fps slider
+	sliderField.setSize(sf::Vector2f(100, 20));
+	sliderField.setPosition(width - 200, height - 35);
+	sliderField.setFillColor(sf::Color(180,180,180));
+	sliderPosition.setSize(sf::Vector2f(20, 20));
+	sliderPosition.setPosition(width - 160, height - 35);
+	sliderPosition.setFillColor(sf::Color::White);
+
+	//fps frame limit
+	window->setFramerateLimit(m_fps_limit);
 
 	//render first
 	Render();
@@ -71,10 +88,23 @@ Window::Window()
 }
 void Window::Update()
 {
+	//clock 
+	sf::Clock clock;
+	window->setFramerateLimit(10);
 
 	//main loop
 	while (window->isOpen())
 	{
+		//fps
+		if (clock.getElapsedTime().asSeconds() >= 1.f)
+		{
+			m_fps = m_frame;
+			m_frame = 0;
+			clock.restart();
+			fps.setString(std::to_string(m_fps).append(" fps"));
+		}
+		m_frame++;
+
 		//play game
 		if(playGame)
 			game->PlayGame();
@@ -98,16 +128,16 @@ void Window::Update()
 				
 				if (position.x < 55 && position.y > height - 40)
 				{
-					button[0].setFillColor(sf::Color::White);
-					button[1].setFillColor(sf::Color(180,180,180));
+					button[0].setFillColor(sf::Color(180,180,180));
+					button[1].setFillColor(sf::Color::White);
 					button[2].setFillColor(sf::Color(180,180,180));
 					button[3].setFillColor(sf::Color(180,180,180));
 					playGame = true;
 				}
 				else if (position.x <130 && position.y > height - 40)
 				{
-					button[0].setFillColor(sf::Color(180,180,180));
-					button[1].setFillColor(sf::Color::White);
+					button[0].setFillColor(sf::Color::White);
+					button[1].setFillColor(sf::Color(180,180,180));
 					button[2].setFillColor(sf::Color::White);
 					button[3].setFillColor(sf::Color::White);
 					playGame = false;
@@ -119,6 +149,12 @@ void Window::Update()
 				else if (position.x <340 && position.y >height - 40 && !playGame)
 				{
 					game->ForwardRestoreBoardToMemento();
+				}
+				else if (position.x >width - 195 && position.x <width-105 && position.y >height - 35)
+				{
+					sliderPosition.setPosition(position.x - 10, sliderPosition.getPosition().y);
+					m_fps_limit = (sliderPosition.getPosition().x - (width - 205))/2;
+					window->setFramerateLimit(m_fps_limit);
 				}
 			}
 		}
@@ -137,6 +173,9 @@ void Window::Render()
 	window->draw(button[1]);
 	window->draw(button[2]);
 	window->draw(button[3]);
+	window->draw(fps);
+	window->draw(sliderField);
+	window->draw(sliderPosition);
 	
 
 	//render cells
