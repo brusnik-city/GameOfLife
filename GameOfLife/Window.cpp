@@ -31,7 +31,7 @@ Window::Window()
 	title.setString("Game of life");
 	title.setCharacterSize(32);
 	title.setFillColor(sf::Color::White);
-	title.setPosition(sf::Vector2f(width/2-90, 30.f));
+	title.setPosition(sf::Vector2f(width/2-90, 10.f));
 	
 	//Cells
 	deathCell.setFillColor(sf::Color(120, 120, 120));
@@ -68,14 +68,14 @@ Window::Window()
 	fps.setFont(font);
 	fps.setCharacterSize(16);
 	fps.setFillColor(sf::Color::White);
-	fps.setPosition(width - 60, height - 35);
+	fps.setPosition(width - 180, 65);
 	
 	//fps slider
-	sliderField.setSize(sf::Vector2f(100, 20));
-	sliderField.setPosition(width - 200, height - 35);
+	sliderField.setSize(sf::Vector2f(110, 20));
+	sliderField.setPosition(width - 120, 65);
 	sliderField.setFillColor(sf::Color(180,180,180));
 	sliderPosition.setSize(sf::Vector2f(20, 20));
-	sliderPosition.setPosition(width - 160, height - 35);
+	sliderPosition.setPosition(width - 80, 65);
 	sliderPosition.setFillColor(sf::Color::White);
 
 	//fps frame limit
@@ -150,10 +150,10 @@ void Window::Update()
 				{
 					game->ForwardRestoreBoardToMemento();
 				}
-				else if (position.x >width - 195 && position.x <width-105 && position.y >height - 35)
+				else if (position.x >width - 115 && position.x <width-15 && position.y > 55 && position.y < 80)
 				{
 					sliderPosition.setPosition(position.x - 10, sliderPosition.getPosition().y);
-					m_fps_limit = (sliderPosition.getPosition().x - (width - 205))/2;
+					m_fps_limit = (sliderPosition.getPosition().x - (width - 125))/2;
 					window->setFramerateLimit(m_fps_limit);
 				}
 			}
