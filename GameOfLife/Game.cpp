@@ -11,13 +11,13 @@ Game::Game(std::string pattern)
 
 Game::~Game() {}
 
-void Game::PlayGame()
+void Game::PlayGame(int begin, int end)
 {
 	int counter = 0;
 	Board newBoard = m_board;
-	for (int i = 0; i < m_board.SizeX(); i++)
+	for (int i = begin; i < end; i++)
 	{
-		for (int j = 0; j < m_board.SizeY() ; j++)
+		for (int j = 0; j < m_board.SizeY(); j++)
 		{
 			if (i == 0 )
 			{
@@ -137,7 +137,14 @@ void Game::PlayGame()
 		}
 	}
 	m_caretaker.setMemento(m_board.createMemento());
-	m_board = newBoard;
+	//m_board = newBoard;
+	for (int i = begin; i < end; i++)
+	{
+		for (int j = 0; j < m_board.SizeY(); j++)
+		{
+			m_board.Value(i,j) = newBoard.Value(i,j);
+		}
+	}
 }
 
 
@@ -170,3 +177,4 @@ void Game::SavePattern(std::string pattern)
 {
 	m_board.SaveBoardToFile(pattern);
 }
+

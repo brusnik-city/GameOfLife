@@ -80,12 +80,6 @@ void Board::FillBoardFromFile(std::string pattern)
 				line.clear();
 				break;
 			case '!':
-				for (auto lenght = (line.size()); lenght < std::stoi(x); lenght++)
-				{
-					line.push_back(0);
-				}
-				m_board.push_back(line);
-				line.clear();
 				gameFile.ignore(std::numeric_limits<std::streamsize>::max(), EOF);
 				break;
 			default:

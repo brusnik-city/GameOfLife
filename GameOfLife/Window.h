@@ -1,6 +1,7 @@
 #pragma once
 #include "Game.h"
 #include <SFML/Graphics.hpp>
+#include <thread>
 
 
 class Window
@@ -11,7 +12,7 @@ public:
 	void Render();
 private:
 
-	std::unique_ptr<Game> game;
+	std::shared_ptr<Game> game;
 	void CreateNewGame(int pattern);
 	std::vector<std::string> patterns;
 	sf::RenderWindow *window;

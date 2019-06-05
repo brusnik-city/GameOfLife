@@ -15,8 +15,8 @@ void Window::CreateNewGame(int pattern)
 
 	//create new game
 	//delete game;
-	game = std::make_unique<Game>(Game(patterns.at(pattern)));
-
+	game = std::make_shared<Game>(Game(patterns.at(pattern)));
+	//game = new Game(patterns.at(pattern));
 	//get size
 	width = game->GetSizeX() * 41 - 1;
 	height = game->GetSizeY() * 41 + 150;
@@ -132,8 +132,23 @@ void Window::Update()
 		m_frame++;
 
 		//play game
-		if(playGame)
-			game->PlayGame();
+		if (playGame)
+		{
+			int t1 = game->GetSizeX() / 3;
+			int t2 = 2 * (game->GetSizeX() / 3);
+			int t3 = game->GetSizeX();
+			std::thread thread1(&Game::PlayGame, game, 0, game->GetSizeX());
+			//std::thread thread2(&Game::PlayGame, game, game->GetSizeX() / 2,game->GetSizeX());
+			//std::thread thread3(&Game::PlayGame, game, 2 * (game->GetSizeX()/3), game->GetSizeX());
+			thread1.join();
+			//thread2.join();
+			//thread3.join();
+			//game->PlayGame(0, game->GetSizeX());
+		}
+		
+		//render window
+		Render();
+
 
 		//events
 		sf::Event event;
@@ -168,7 +183,6 @@ void Window::Update()
 					button[3].setFillColor(sf::Color::White);
 					playGame = false;
 					game->SavePattern(patterns.at(selectedPattern));
-					selectedPattern++;
 				}
 				else if (position.x <240 && position.y >height - 40 && !playGame)
 				{
@@ -191,10 +205,9 @@ void Window::Update()
 						selectedPattern = 0;
 					CreateNewGame(selectedPattern);
 				}
-			}
+			}	
 		}
-		//render window
-		Render();
+
 	}
 }
 

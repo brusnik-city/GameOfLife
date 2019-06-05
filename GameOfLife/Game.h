@@ -8,7 +8,7 @@ class Game
 public:
 	Game(std::string pattern);
 	~Game();
-	void PlayGame();
+	void PlayGame(int begin,int end);
 	size_t GetSizeX() const;
 	size_t GetSizeY() const;
 	bool GetCell(int i, int j);
