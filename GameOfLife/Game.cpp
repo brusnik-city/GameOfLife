@@ -4,9 +4,9 @@
 
 #include "Game.h"
 
-Game::Game() 
+Game::Game(std::string pattern) 
 {
-	m_board.FillBoardFromFile();
+	m_board.FillBoardFromFile(pattern);
 }
 
 Game::~Game() {}
@@ -164,4 +164,9 @@ void Game::BackwardRestoreBoardToMemento()
 void Game::ForwardRestoreBoardToMemento()
 {
 	m_board.restoreToMemento(m_caretaker.getMementoForward());
+}
+
+void Game::SavePattern(std::string pattern)
+{
+	m_board.SaveBoardToFile(pattern);
 }

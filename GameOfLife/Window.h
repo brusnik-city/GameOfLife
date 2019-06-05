@@ -11,7 +11,9 @@ public:
 	void Render();
 private:
 
-	Game *game;
+	std::unique_ptr<Game> game;
+	void CreateNewGame(int pattern);
+	std::vector<std::string> patterns;
 	sf::RenderWindow *window;
 	sf::Text title;
 	sf::RectangleShape titleRectangle;
@@ -22,12 +24,15 @@ private:
 	sf::RectangleShape sliderPosition;
 	sf::Text button[4];
 	sf::Text fps;
+	sf::Text nextPattern;
 	unsigned int m_frame = 0;
 	unsigned int m_fps = 0;
 	unsigned int m_fps_limit = 50;
 	int width;
 	int height;
 	bool playGame = false;
+	bool start = true;
+	int selectedPattern;
 
 
 };

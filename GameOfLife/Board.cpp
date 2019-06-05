@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 
 #include "Memento.h"
 #include "Board.h"
@@ -14,13 +13,13 @@ Board::Board(const Board& oldBoard)
 	m_board = oldBoard.GetBoard();
 }
 
-void Board::FillBoardFromFile()
+void Board::FillBoardFromFile(std::string pattern)
 {
 	std::string x;
 	std::string y;
 	char field;
 	std::ifstream gameFile;
-	gameFile.open("Glider.rle", std::ios::in);
+	gameFile.open(pattern, std::ios::in);
 	if (gameFile.is_open())
 	{
 		std::string counter = "";
@@ -51,11 +50,6 @@ void Board::FillBoardFromFile()
 					gameFile.get(field);
 				}
 				gameFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				for (int i = 0; i < std::stoi(x)+2; i++)
-					line.push_back(0);
-				m_board.push_back(line);
-				line.clear();
-				line.push_back(0);
 				break;
 			case 'o':
 				if (counter.empty())
@@ -78,25 +72,20 @@ void Board::FillBoardFromFile()
 				counter = "";
 				break;
 			case '$':
-				for (auto lenght = (line.size()); lenght < std::stoi(x)+2; lenght++)
+				for (auto lenght = (line.size()); lenght < std::stoi(x); lenght++)
 				{
 					line.push_back(0);
 				}
 				m_board.push_back(line);
 				line.clear();
-				line.push_back(0);
 				break;
 			case '!':
-				for (auto lenght = (line.size()); lenght < std::stoi(x)+2; lenght++)
+				for (auto lenght = (line.size()); lenght < std::stoi(x); lenght++)
 				{
 					line.push_back(0);
 				}
-				line.push_back(0);
 				m_board.push_back(line);
 				line.clear();
-				for (int i = 0; i < std::stoi(x) + 2; i++)
-					line.push_back(0);
-				m_board.push_back(line);
 				gameFile.ignore(std::numeric_limits<std::streamsize>::max(), EOF);
 				break;
 			default:
@@ -104,24 +93,57 @@ void Board::FillBoardFromFile()
 			}
 		}
 	}
+}
 
-	/*{
-		std::vector<int> line;
-		while (gameFile.get(field))
+void Board::SaveBoardToFile(std::string pattern)
+{
+	std::ofstream gameFile;
+	gameFile.open(pattern, std::ios::out);
+	int prev, cur, counter = 0;
+	if (gameFile.is_open())
+	{
+		gameFile << "#";
+		gameFile << pattern;
+		gameFile << "\n";
+		gameFile << "x = " + std::to_string(SizeX());
+		gameFile << ", y = " + std::to_string(SizeY());
+		gameFile << ",\n";
+		int count;
+		for (int i = 0; i < SizeY(); i++)
 		{
-			line.push_back(static_cast<int>(field - 48));
-			if (field == '\n')
+			for (int j = 0; j < (SizeX()-2); j++)
 			{
-				line.pop_back();
-				m_board.push_back(line);
-				line.clear();
+				count = 1;
+				while (j < SizeX() - 1 && m_board[i][j] == m_board[i][j + 1])
+				{
+					count++;
+					j++;
+				}
+				if (count == SizeX() && m_board[i][j] == 0)
+				{
+
+				}
+				else if (j == SizeX() - 1 && m_board[i][j] == 0)
+				{
+
+				}
+				else
+				{
+					switch (m_board[i][j])
+					{
+					case 1:
+						gameFile << std::to_string(count) + "o";
+						break;
+					case 0:
+						gameFile << std::to_string(count) + "b";
+					}
+					
+				}
 			}
+			gameFile << "$";
 		}
-		m_board.push_back(line);
-		line.clear();
+		gameFile << "!";
 	}
-	else
-		std::cout << "nie otworzono";*/
 }
 
 size_t Board::SizeX() const

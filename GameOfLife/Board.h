@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 class Memento;
 
@@ -10,7 +11,8 @@ public:
 	Board(const Board& oldBoard);
 	~Board();
 	std::vector<std::vector<int>> GetBoard() const;
-	void FillBoardFromFile();
+	void FillBoardFromFile(std::string pattern);
+	void SaveBoardToFile(std::string pattern);
 	size_t SizeX() const;
 	size_t SizeY() const;
 	int& Value(int x, int y);

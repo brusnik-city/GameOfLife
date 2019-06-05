@@ -6,12 +6,13 @@
 class Game
 {
 public:
-	Game();
+	Game(std::string pattern);
 	~Game();
 	void PlayGame();
 	size_t GetSizeX() const;
 	size_t GetSizeY() const;
 	bool GetCell(int i, int j);
+	void SavePattern(std::string pattern);
 	void BackwardRestoreBoardToMemento();
 	void ForwardRestoreBoardToMemento();
 private:
